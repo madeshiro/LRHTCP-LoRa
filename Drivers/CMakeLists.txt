@@ -20,6 +20,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE     #
 # SOFTWARE.                                                                         #
 #####################################################################################
+include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 
 # Driver for Raspberry PI 3+ under ARMv8 (64bits) architecture
 add_subdirectory(RPi_x_ARMv8_64)

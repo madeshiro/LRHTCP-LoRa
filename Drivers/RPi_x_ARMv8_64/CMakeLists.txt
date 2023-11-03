@@ -21,3 +21,12 @@
 # SOFTWARE.                                                                         #
 #####################################################################################
 set(TARGET LightWhale_RPi_x_ARMv864)
+
+set(SOURCES
+
+)
+
+set(HEADERS
+    ../lrhtcp_driver.h
+)
+

@@ -72,6 +72,7 @@ endif()
 
 add_definitions(
     -DLIGHTWHALE_${LIGHTWHALE_ARCH}
+    -DLIGHTWHALE_PROJECT
 )
 
 if(UNIX)

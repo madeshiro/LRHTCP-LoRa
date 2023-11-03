@@ -22,7 +22,9 @@
  */
 #ifndef LW_LIBRARY_H
 #define LW_LIBRARY_H
+#include "LightWhaleLibrary.h"
 #include <stddef.h>
+#include <dlfcn.h>
 
 /*< TYPES >*/
 
@@ -100,6 +102,14 @@ typedef long double lwf128;
 #ifdef __cplusplus
 extern "C" {
 #endif //__cplusplus
+
+    /**
+     * Connect the driver to the program's runtime.
+     *
+     * @param dll the library file's path
+     * @return 0 if everything's okay. Value other than '0' defined the error code.
+     */
+    int lw_set_driver(const char* dll);
 
 #ifdef __cplusplus
 };

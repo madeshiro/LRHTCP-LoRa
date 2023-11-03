@@ -1,5 +1,4 @@
 /*
- * LightWhale Communication Protocol for LoRa
  * Copyright (c) 2023 Rin "madeshiro" Baudelet
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -20,39 +19,28 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-#ifndef LW_LIGHTWHALELIBRARY_H
-#define LW_LIGHTWHALELIBRARY_H
-/**
- * LightWhale Library -=- Low-Rate/Heavy Transfert Control Protocol
- *
- * @file LightWhaleLibrary.h
- * @version 2023/11 0.0.1 (alpha)
- * @author Rin "madeshiro" Baudelet
- *
- * ----- << OS/SPECIFICATION >> -----
- * > support OS(arch):
- *   - GNU/Linux distribution (AMD64, ARM64)
- *   - Unix-Like distribution (AMD64, ARM64)
- *   - Windows 10 and latest  (32 and 64bit)
- *
- * > Project made with CMake (@see CMakeLists.txt)
- * > C Standard:    c11
- * > CXX Standard:  c++23
- */
+#include "lwdriver.h"
 
-#define LIGHTWHALE_LRHTCP          202311001L //>! 2023/11 0.0.1-alpha
-#define LIGHTWHALE_LRHTCP_VERSION "2023/11 v0.0.1-alpha"
-#define LIGHTWHALE_LRHTCP_RELEASE 0
-#define LIGHTWHALE_LRHTCP_MAJOR   0
-#define LIGHTWHALE_LRHTCP_MINOR   1
+struct {
+    // Examples, remove afterward
+    int (*LoraRead)();
+    int (*LoraWrite)();
+    int (*LoraSetParams)();
 
-#define LW_DECL_IMPORT  __declspec(dllimport)
-#define LW_DECL_EXPORT  __declspec(dllexport)
+} lrhtcp_driver_api;
 
-#if defined(LIGHTWHALE_PROJECT)
-#define LIGHTWHALE_DIR      __declspec(dllexport)
-#else
-#define LIGHTWHALE_DIR      __declspec(dllimport)
-#endif
+int lw_set_driver(const char *dll)
+{
+    lwptr_t driver_hndl = dlopen(dll, RTLD_LAZY);
+    if (!driver_hndl)
+        return -1; // Unable to open the driver dll
 
-#endif //LW_LIGHTWHALELIBRARY_H
+    // Set-up function's handlers
+    // ... TODO function's handlers
+    lrhtcp_driver_api.LoraRead  = dlsym(driver_hndl, "LoraRead");
+    lrhtcp_driver_api.LoraWrite = dlsym(driver_hndl, "LoraWrite");
+    lrhtcp_driver_api.LoraSetParams = dlsym(driver_hndl, "LoraSetParams");
+
+    dlclose(driver_hndl);
+    return 0;
+}
