@@ -26,11 +26,13 @@ set(TARGET lightwhale)
 
 set(SOURCES
         src/lightwhale.c
+        src/lwdef.c
 )
 
 set(HEADERS
         include/lightwhale.h
         include/LightWhaleLibrary.h
+        include/lwdef.h
 )
 
 ### C++ Files

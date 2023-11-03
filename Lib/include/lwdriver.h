@@ -22,7 +22,7 @@
  */
 #ifndef SDK_LWDRIVER_H
 #define SDK_LWDRIVER_H
-#include "lightwhale.h"
+#include "lwdef.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -32,7 +32,13 @@ extern "C" {
 // interfacing with the SDK as a dynamic link library
 // load in the program's runtime
 
-
+    /**
+     * Connect the driver to the program's runtime.
+     *
+     * @param dll the library file's path
+     * @return 0 if everything's okay. Value other than '0' defined the error code.
+     */
+    int lw_set_driver(const char* dll);
 
 #ifdef __cplusplus
 };

@@ -23,93 +23,11 @@
 #ifndef LW_LIBRARY_H
 #define LW_LIBRARY_H
 #include "LightWhaleLibrary.h"
-#include <stddef.h>
-#include <dlfcn.h>
-
-/*< TYPES >*/
-
-typedef void* lwptr_t;
-typedef size_t lwenum, lwflag;
-typedef size_t lwalloc_s, lwsize_t;
-
-#ifdef __cplusplus
-#define lwnull  nullptr
-#define lwfalse false
-#define lwtrue  true
-
-typedef bool lwbool;
-typedef char char8_t;
-#else
-#define lwnull  0
-#define lwfalse 0
-#define lwtrue  1
-
-typedef unsigned char blbool;
-
-typedef __WCHAR_TYPE__  wchar_t;
-typedef char            char8_t;
-typedef signed short    char16_t;
-typedef signed int      char32_t;
-#endif//__cplusplus
-
-typedef char            lwchar;
-typedef unsigned char   lwbyte;
-
-typedef char8_t     lwc8;
-typedef char16_t    lwc16;
-typedef char32_t    lwc32;
-
-typedef char        lwi8;
-typedef short       lwi16;
-typedef int         lwi32;
-typedef long        lwi64;
-
-typedef unsigned char     lwu8;
-typedef unsigned short    lwu16;
-typedef unsigned int      lwu32;
-typedef unsigned long     lwu64;
-
-typedef float       lwf32;
-typedef double      lwf64;
-
-/* BIG ENDIAN SHORT INT */
-union lw_be_ushort
-{
-    lwbyte  _bytes[2];
-    lwu16   _short;
-};
-
-/* BIG ENDIAN INT */
-union lw_be_uint
-{
-    lwbyte  _bytes[4];
-    lwu32   _int;
-};
-
-/* BIG ENDIAN LONG INT */
-union lw_be_ulong
-{
-    lwbyte  _bytes[8];
-    lwu64   _long;
-};
-
-#ifdef LIGHTWHALE_64
-typedef __int128    lwi128;
-typedef unsigned __int128 lwu128;
-typedef long double lwf128;
-#endif
-
+#include "lwdriver.h"
 #ifdef __cplusplus
 extern "C" {
 #endif //__cplusplus
 
-    /**
-     * Connect the driver to the program's runtime.
-     *
-     * @param dll the library file's path
-     * @return 0 if everything's okay. Value other than '0' defined the error code.
-     */
-    int lw_set_driver(const char* dll);
 
 #ifdef __cplusplus
 };
