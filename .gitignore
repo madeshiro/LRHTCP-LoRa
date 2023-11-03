@@ -1,0 +1,9 @@
+# Jetbrains CLion config
+.idea/
+
+# CMake build files
+cmake-build-*
+
+### Writerside .gitignore ###
+# Build files
+*.zip
