@@ -1,26 +1,25 @@
 #include "lwdriver.h"
-#include <dlfcn.h>
 
-struct {
-    // Examples, remove afterward
-    int (*LoraRead)();
-    int (*LoraWrite)();
-    int (*LoraSetParams)();
-
-} lrhtcp_driver_api;
-
-int lw_set_driver(const char *dll)
+int lrhtcp_lwdriv_read(lwi32 n, lwbyte* restrict dest)
 {
-    lwptr_t driver_hndl = dlopen(dll, RTLD_LAZY);
-    if (!driver_hndl)
-        return -1; // Unable to open the driver dll
+    // TODO lrhtcp_lwdriv_read
+    return -1;
+}
 
-    // Set-up function's handlers
-    // ... TODO function's handlers
-    lrhtcp_driver_api.LoraRead  = dlsym(driver_hndl, "LoraRead");
-    lrhtcp_driver_api.LoraWrite = dlsym(driver_hndl, "LoraWrite");
-    lrhtcp_driver_api.LoraSetParams = dlsym(driver_hndl, "LoraSetParams");
+int lrhtcp_lwdriv_write(lwi32 n, const lwbyte* restrict src)
+{
+    // TODO lrhtcp_lwdriv_write
+    return -1;
+}
 
-    dlclose(driver_hndl);
-    return 0;
+int lrhtcp_lwdriv_open(lwflag open_mode)
+{
+    // TODO lrhtcp_lwdriv_open
+    return -1;
+}
+
+int lrhtcp_lwdriv_release()
+{
+    // TODO lrhtcp_lwdriv_release
+    return -1;
 }

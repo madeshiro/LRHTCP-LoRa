@@ -20,10 +20,10 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE     #
 # SOFTWARE.                                                                         #
 #####################################################################################
-cmake_minimum_required(VERSION 3.23)
+cmake_minimum_required(VERSION 3.18)
 project(lightwhale LANGUAGES C CXX VERSION 0.1.0)
 set(CMAKE_C_STANDARD 11)
-set(CMAKE_CXX_STANDARD 23)
+set(CMAKE_CXX_STANDARD 20)
 
 # Setup CTest
 include(CTest)
@@ -87,4 +87,3 @@ include_directories("${CMAKE_CURRENT_SOURCE_DIR}/Lib/include")
 
 # Add sub-projects
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/Lib)
-add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/Drivers)

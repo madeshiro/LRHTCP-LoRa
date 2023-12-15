@@ -27,11 +27,12 @@ set(TARGET lightwhale)
 set(SOURCES
         src/lightwhale.c
         src/lwdef.c
+        src/lwdriver.c
 )
 
 set(HEADERS
         include/lightwhale.h
-        include/LightWhaleLibrary.h
+        include/liblightwhale.h
         include/lwdef.h
 )
 

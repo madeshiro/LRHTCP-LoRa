@@ -32,13 +32,92 @@ extern "C" {
 // interfacing with the SDK as a dynamic link library
 // load in the program's runtime
 
+#ifdef LIGHTWHALE_UNIX
+
+// Lora Hardware channel and configuration for specific component
+// 10 available channels [0-9], prefix slwcomm
+// Serial LightWhale Communication
+
+#   define LWDRIV_COMM0     "/dev/slwcomm0" // Serial LightWhale Communication Ch.0
+#   define LWDRIV_COMM1     "/dev/slwcomm1" // Serial LightWhale Communication Ch.1
+#   define LWDRIV_COMM2     "/dev/slwcomm2" // Serial LightWhale Communication Ch.2
+#   define LWDRIV_COMM3     "/dev/slwcomm3" // Serial LightWhale Communication Ch.3
+#   define LWDRIV_COMM4     "/dev/slwcomm4" // Serial LightWhale Communication Ch.4
+#   define LWDRIV_COMM5     "/dev/slwcomm5" // Serial LightWhale Communication Ch.5
+#   define LWDRIV_COMM6     "/dev/slwcomm6" // Serial LightWhale Communication Ch.6
+#   define LWDRIV_COMM7     "/dev/slwcomm7" // Serial LightWhale Communication Ch.7
+#   define LWDRIV_COMM8     "/dev/slwcomm8" // Serial LightWhale Communication Ch.8
+#   define LWDRIV_COMM9     "/dev/slwcomm9" // Serial LightWhale Communication Ch.9
+
+#elif defined(LIGHTWHALE_WIN32)
+#error "not supported yet !" // Focus on Linux/Unix-Like system
+#else
+#error "not supported OS"
+#endif
+
     /**
-     * Connect the driver to the program's runtime.
-     *
-     * @param dll the library file's path
-     * @return 0 if everything's okay. Value other than '0' defined the error code.
+     * \brief Read data from the driver.
+     * \param n Number of byte to read.
+     * \param dest Destination buffer to fill
+     * \return The number of bytes actually read
      */
-    int lw_set_driver(const char* dll);
+    extern int lrhtcp_lwdriv_read(lwi32 n, lwbyte * restrict dest);
+
+    /**
+     * \brief Write data on the driver.
+     * \param n Number of byte to write.
+     * \param src Data to write on the driver.
+     * \return The number of bytes successfuly written.
+     */
+    extern int lrhtcp_lwdriv_write(lwi32 n, const lwbyte * restrict src);
+
+    /**
+     * \brief Open the buffer in the specified open mode.
+     * \param open_mode Tell how to open the buffer (FILE*).
+     * \return -1 in case of failure, above or equal to 0 otherwise.
+     */
+    extern int lrhtcp_lwdriv_open(lwflag open_mode);
+
+    /**
+     * \brief Close the driver buffer.
+     * \return -1 in case of failure, above or equal to 0 otherwise.
+     */
+    extern int lrhtcp_lwdriv_release();
+
+    typedef struct lw_driver_obj lwdriv, *lwdriv_p;
+    struct lw_driver_obj
+    {
+        int (*read)(lwi32 n, lwbyte * restrict dest);
+        int (*write)(lwi32 n, const lwbyte * restrict src);
+        int (*open)(lwflag open_mode);
+        int (*release)();
+
+        struct lw_driver_desc
+        {
+            /**
+             * \brief Driver channel where's the driver performed
+             */
+            const char* channel;
+
+            const char* license;        /**< license of the driver      */
+            const char* author;         /**< author of the driver       */
+            const char* description;    /**< description of the driver  */
+            const char* version;        /**< version of the driver      */
+        } __desc;
+    } const lw_default_driver = {
+        .read    = lrhtcp_lwdriv_read,
+        .write   = lrhtcp_lwdriv_write,
+        .open    = lrhtcp_lwdriv_open,
+        .release = lrhtcp_lwdriv_release,
+        {
+            .channel = LWDRIV_COMM0,
+
+            .license        = "MIT",
+            .author         = "Rin E. Baudelet",
+            .description    = "Default LoRa driver for the LightWhale Project",
+            .version        = LIGHTWHALE_LRHTCP_VERSION
+        }
+    };
 
 #ifdef __cplusplus
 };

@@ -22,6 +22,8 @@
 #ifndef LW_LWDEF_H
 #define LW_LWDEF_H
 #include <stddef.h>
+#include "liblightwhale.h"
+
 
 /*< TYPES >*/
 
@@ -100,7 +102,7 @@ typedef long double lwf128;
 #endif
 #ifdef __cplusplus
 extern "C" {
-#endif//__cplusplus
+#endif
 
     /**
      * Check if the system use the Big Endian Byte order
@@ -132,9 +134,34 @@ extern "C" {
      */
     lw_be_ulong lwlltonhll(lwu64 hostlong);
 
+    typedef union lightwhale_lp_addr lw_lp_addr;
+    union lightwhale_lp_addr
+    {
+        lwu8  lp_addr_seg[4];
+        lwu16 lp_addr_s16[2];
+        lwu32 lp_addr;
+    };
+
+    typedef struct lightwhale_header_lp lw_lp_header, *plw_lp_header;
+    /**
+     * LightWhale Header Lora Protocol
+     */
+    struct lightwhale_header_lp
+    {
+        lwu8 lp_length;         /**< Header length          */
+        lwu8 lp_flags;          /**< Header flag            */
+        lwu8 lp_ttc;            /**< number of root iter    */
+
+        lw_lp_addr lp_addr;     /**< Target address         */
+        lwu16      lp_port;     /**< Target port            */
+
+        lwu32 packet_length;    /**< Full packet length     */
+
+        lwu32 packet_comm_index;    /**< index of the packet in full communication    */
+        lwu32 packet_comm_count;    /**< count of total packets in full communication */
+    };
+
 #ifdef __cplusplus
 };
-#endif//__cplusplus
-
-
-#endif //LW_LWDEF_H
+#endif // __cplusplus
+#endif // LW_LWDEF_H

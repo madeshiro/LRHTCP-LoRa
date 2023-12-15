@@ -22,12 +22,25 @@
  */
 #ifndef LW_LIBRARY_H
 #define LW_LIBRARY_H
-#include "LightWhaleLibrary.h"
+#include "liblightwhale.h"
 #include "lwdriver.h"
 #ifdef __cplusplus
 extern "C" {
 #endif //__cplusplus
 
+    /**
+     * Connect the driver to the program's runtime.
+     *
+     * @param dll the library file's path
+     * @return 0 if everything's okay. Value other than '0' defined the error code.
+     */
+    int lw_set_driver(const char* dll);
+
+/**
+ * \brief Get the driver descriptor used for LoRa Communication
+ * \return current driver structure's descriptor
+ */
+    lwdriv lw_get_driver();
 
 #ifdef __cplusplus
 };
