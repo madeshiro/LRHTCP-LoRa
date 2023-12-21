@@ -19,11 +19,61 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+
+// > ReSharper Hint Disable (CLion Nova)
+// ReSharper disable CppUnusedIncludeDirective
+
 #ifndef LW_LWDEF_H
 #define LW_LWDEF_H
 #include <stddef.h>
 #include "liblightwhale.h"
 
+// ---- LORA CONFIGURATION CONSTANTS ---- //
+
+// >    Define Spreading factors
+
+#define LW_LORA_SF12    0 /*< SF12 */
+#define LW_LORA_SF11    1 /*< SF11 */
+#define LW_LORA_SF10    2 /*< SF10 */
+#define LW_LORA_SF9     3 /*< SF9  */
+#define LW_LORA_SF8     4 /*< SF8  */
+#define LW_LORA_SF7     5 /*< SF7  */
+
+// >    Define broadcast ratio
+
+#define LW_BROADCAST_1P     0 /*< Classical ratio 1% legal limitation        */
+#define LW_BROADCAST_10P    1 /*< Force to switch to the special channel legal
+                                limitation up to 10 %                        */
+#define LW_BROADCAST_L2T    2 /*< Listen To Talk : up to 100% until another
+                                  device start a communication               */
+#define LW_BROADCAST_L2TM   3 /*< Listen To Talk adaptive -- reserved        */
+
+// >    Define Bandwidth and associate channels
+
+#define LW_BANDWIDTH_125    0x10    /*< 125 KHz */
+#   define LW_CHANNEL125_0  0x00    // .000 - .124 MHz
+#   define LW_CHANNEL125_1  0x01    // .125 - .249 MHz
+#   define LW_CHANNEL125_2  0x02    // .250 - .374 MHz
+#   define LW_CHANNEL125_3  0x03    // .375 - .499 MHz
+#   define LW_CHANNEL125_4  0x04    // .500 - .624 MHz
+#   define LW_CHANNEL125_5  0x05    // .625 - .749 MHz
+#   define LW_CHANNEL125_6  0x06    // .750 - .874 MHz
+#   define LW_CHANNEL125_7  0x07    // .875 - .999 MHz
+
+#define LW_BANDWIDTH_250    0x20    /*< 250 KHz */
+#   define LW_CHANNEL250_0  0x00    // .000 - .249 MHz
+#   define LW_CHANNEL250_1  0x01    // .250 - .499 MHz
+#   define LW_CHANNEL250_2  0x02    // .500 - .749 MHz
+#   define LW_CHANNEL250_3  0x03    // .750 - .999 MHz
+
+#define LW_BANDWIDTH_333    0x30    /*< 333 KHz */
+#   define LW_CHANNEL333_0  0x00    // .000 - .332 MHz
+#   define LW_CHANNEL333_1  0x01    // .333 - .665 MHz
+#   define LW_CHANNEL333_2  0x02    // .666 - .998 MHz
+
+#define LW_BANDWIDTH_500    0x40    /*< 500 KHz */
+#   define LW_CHANNEL500_0  0x00    // .000 - .499 Mhz
+#   define LW_CHANNEL500_1  0x01    // .500 - .999 Mhz
 
 /*< TYPES >*/
 
@@ -144,7 +194,7 @@ extern "C" {
 
     typedef struct lightwhale_header_lp lw_lp_header, *plw_lp_header;
     /**
-     * LightWhale Header Lora Protocol
+     * \brief LightWhale Header Lora Protocol
      */
     struct lightwhale_header_lp
     {
@@ -159,6 +209,22 @@ extern "C" {
 
         lwu32 packet_comm_index;    /**< index of the packet in full communication    */
         lwu32 packet_comm_count;    /**< count of total packets in full communication */
+    };
+
+    typedef struct lightwhale_data_lp lw_lp_data, *plw_lp_data;
+    /**
+     * \brief LightWhale Data Descriptor
+     */
+    struct lightwhale_data_lp; // Defined in lwpacket.c
+
+    typedef struct lightwhale_frame_lp lw_lp_frame, *plw_lp_frame;
+    /**
+     * \brief LightWhale Frame, Lora Protocol
+     */
+    struct lightwhale_frame_lp
+    {
+        struct lightwhale_header_lp const*  header;
+        struct lightwhale_data_lp const*    data;
     };
 
 #ifdef __cplusplus

@@ -28,12 +28,14 @@ set(SOURCES
         src/lightwhale.c
         src/lwdef.c
         src/lwdriver.c
+        src/lwpacket.c
 )
 
 set(HEADERS
         include/lightwhale.h
         include/liblightwhale.h
         include/lwdef.h
+        include/lwpacket.h
 )
 
 ### C++ Files
