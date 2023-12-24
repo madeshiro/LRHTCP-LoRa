@@ -44,9 +44,9 @@
 #define LW_BROADCAST_1P     0 /*< Classical ratio 1% legal limitation        */
 #define LW_BROADCAST_10P    1 /*< Force to switch to the special channel legal
                                 limitation up to 10 %                        */
-#define LW_BROADCAST_L2T    2 /*< Listen To Talk : up to 100% until another
-                                  device start a communication               */
-#define LW_BROADCAST_L2TM   3 /*< Listen To Talk adaptive -- reserved        */
+#define LW_BROADCAST_LBT    2 /*< Listen Before Talk : up to 100% until
+                                  another device start a communication       */
+#define LW_BROADCAST_LBTM   3 /*< Listen Before Talk adaptive -- *Reserved*  */
 
 // >    Define Bandwidth and associate channels
 
